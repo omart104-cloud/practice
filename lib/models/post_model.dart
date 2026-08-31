@@ -3,13 +3,17 @@ class Post {
   final String title;
   final String body;
 
-  Post({required this.id, required this.title, required this.body});
+  Post({
+    required this.id,
+    required this.title,
+    required this.body,
+  });
 
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
-      id: json["id"] as int,
-      title: json["title"] as String,
-      body: json["body"] as String,
+      id: json['id'] as int,
+      title: json['title'] as String? ?? '',
+      body: json['body'] as String? ?? '',
     );
   }
 }

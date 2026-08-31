@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:practice/models/post_model.dart';
 
@@ -25,13 +23,12 @@ class ApiService {
     try {
       final response = await _dio.get('/posts');
 
-      // 1. Access the nested 'posts' list from the returned JSON map
-      List<dynamic> rawData = response.data['posts'];
+      // Access 'posts' array from DummyJSON response object
+      final List<dynamic> rawData = response.data['posts'];
 
-      // 2. Map the list items to your Post model
-      return rawData.map((json) => Post.fromJson(json)).toList();
+      return rawData.map((json) => Post.fromJson(json as Map<String, dynamic>)).toList();
     } on DioException catch (e) {
-      throw Exception('Failed to load posts: ${e.message}');
+      throw Exception('Network error: ${e.message}');
     }
   }
 
